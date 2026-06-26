@@ -102,13 +102,6 @@
       "intent": "horizontal_node_tree_flow"
     },
     {
-      "id": "architecture-diagram",
-      "status": "ready",
-      "kind": "diagram",
-      "scene": "architecture-and-flow",
-      "intent": "system_architecture_diagram"
-    },
-    {
       "id": "architecture-elements",
       "status": "ready",
       "kind": "diagram",

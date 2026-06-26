@@ -1,5 +1,7 @@
 # Comparison & Decision
 
+Shared contracts: apply `references/rendering-contract.md`, `references/content-guidelines.md`, `references/material-catalog.md`, and `tokens/visual-tokens.md`.
+
 ## When to enter this scene
 
 The user's intent involves any of the following decision-oriented needs:
@@ -79,6 +81,8 @@ Do NOT generate a visualization in the following cases — reply with Markdown t
 - Card layout uses grid with `minmax(0, 1fr)` and switches to vertical stacking on narrow viewports
 
 ## Reference materials
+
+Use `references/material-catalog.md` for final use/avoid boundaries. This scene list is the local shortlist.
 
 | Data relationship / Intent | Reference material | Usage notes |
 |---|---|---|

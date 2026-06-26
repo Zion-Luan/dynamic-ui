@@ -272,10 +272,13 @@ Normal diagrams use only these classes:
 Rules:
 - Use `c-neutral` plus at most 1-2 meaning colors in a compact diagram.
 - Default to `c-brand` for the main story, not a random categorical color.
+- The default posture for flowcharts and architecture diagrams is neutral surfaces + neutral connectors + one visible brand focal point. Add one accent or semantic color only when it explains a real state, risk, branch, or comparison.
+- Treat color count as meaning count. If three nodes have three unrelated colors, the diagram is claiming three distinct meanings and needs labels or a legend; otherwise keep them neutral.
 - Do not color steps as a rainbow.
 - Do not apply diagram classes to connector paths. Use `arr` or `leader` for normal light-gray connectors; reserve `--brand`, `--accent`, or semantic strokes for connectors that carry focus or status meaning.
 - Default flowchart connector color is tokenized light gray through `--text-muted` or `--border`; avoid arbitrary saturated connector colors.
 - Text on brand or accent soft surfaces must use the matching text token. Text on semantic soft surfaces uses `--text`; semantic color itself is reserved for stroke, icon, or secondary label emphasis.
+- Exceptions are allowed for state machines, risk maps, or mechanism diagrams when color directly encodes status, temperature, pressure, activity, or another explained variable. In those cases, keep the palette tokenized and add direct labels or a concise legend.
 
 Class CSS template:
 

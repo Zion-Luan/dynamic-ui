@@ -294,11 +294,11 @@
           <path class="fallbackSlice" data-key="firefox" d="M 130 130 L 121.52 229.64 A 100 100 0 0 1 32.32 151.40 Z"/>
           <path class="fallbackSlice" data-key="edge" d="M 130 130 L 32.32 151.40 A 100 100 0 0 1 72.60 48.11 Z"/>
           <path class="fallbackSlice" data-key="other" d="M 130 130 L 72.60 48.11 A 100 100 0 0 1 130.00 30.00 Z"/>
-          <text class="fallbackLabel" data-key="chrome" x="175.02" y="96.70" text-anchor="middle">Chrome</text>
-          <text class="fallbackLabel" data-key="safari" x="161.36" y="176.40" text-anchor="middle">Safari</text>
-          <text class="fallbackLabel" data-key="firefox" x="93.07" y="172.10" text-anchor="middle">Firefox</text>
-          <text class="fallbackLabel" data-key="edge" x="77.83" y="109.65" text-anchor="middle">Edge</text>
-          <text class="fallbackLabel" data-key="other" x="113.15" y="76.60" text-anchor="middle">Other</text>
+          <text class="fallbackLabel" data-key="chrome" x="176.14" y="95.88" text-anchor="middle">Chrome</text>
+          <text class="fallbackLabel" data-key="safari" x="164.53" y="181.08" text-anchor="middle">Safari</text>
+          <text class="fallbackLabel" data-key="firefox" x="88.94" y="176.82" text-anchor="middle">Firefox</text>
+          <text class="fallbackLabel" data-key="edge" x="71.40" y="107.14" text-anchor="middle">Edge</text>
+          <text class="fallbackLabel" data-key="other" x="110.25" y="67.41" text-anchor="middle">Other</text>
         </svg>
       </div>
       <div class="chartTooltip" data-visible="false" data-placement="top" aria-hidden="true">
@@ -474,6 +474,28 @@
         });
         return `rgb(${hoverChannels.join(", ")})`;
       };
+      // Use the filled sector centroid so labels read as centered inside each slice.
+      const getSliceLabelPoint = (arc) => {
+        if (!arc || typeof arc.getProps !== "function") {
+          return null;
+        }
+
+        const props = arc.getProps(["x", "y", "startAngle", "endAngle", "innerRadius", "outerRadius"], true);
+        const angle = Math.abs(props.endAngle - props.startAngle);
+        if (!Number.isFinite(angle) || angle <= 0) {
+          return null;
+        }
+
+        const middleAngle = (props.startAngle + props.endAngle) / 2;
+        const innerRadius = Math.max(0, props.innerRadius || 0);
+        const outerRadius = Math.max(innerRadius, props.outerRadius || 0);
+        const centroidRatio = (4 * Math.sin(angle / 2)) / (3 * angle);
+        const radius = innerRadius + (outerRadius - innerRadius) * centroidRatio;
+        return {
+          x: props.x + Math.cos(middleAngle) * radius,
+          y: props.y + Math.sin(middleAngle) * radius
+        };
+      };
       const labelPlugin = {
         id: "dynamicUiPieLabelList",
         afterDatasetsDraw(chart) {
@@ -485,10 +507,10 @@
           context.textBaseline = "middle";
           meta.data.forEach((arc, index) => {
             const row = rows[index];
-            if (!row || row.value / total < 0.06 || !arc.tooltipPosition) {
+            const point = getSliceLabelPoint(arc);
+            if (!row || row.value / total < 0.06 || !point) {
               return;
             }
-            const point = arc.tooltipPosition(true);
             const label = row.label.length > 10 ? `${row.label.slice(0, 9)}...` : row.label;
             context.fillStyle = brandOn;
             context.fillText(label, point.x, point.y);

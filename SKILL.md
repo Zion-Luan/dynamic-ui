@@ -28,14 +28,22 @@ Do NOT use for standalone websites, apps, long reports, dashboards, slides, or w
 │   ├── comparison-and-decision.md
 │   ├── mechanism-explanation.md
 │   └── micro-interaction.md
+├── references/           ← Shared contracts and material routing
+│   ├── rendering-contract.md
+│   ├── content-guidelines.md
+│   ├── svg-guide.md
+│   ├── material-catalog.md
+│   └── structure-sync.md
 ├── tokens/
 │   └── visual-tokens.md  ← Full CSS token definitions (read on demand)
-└── templates/            ← Material library (reusable primitive examples)
-    ├── manifest.json
-    └── <template-id>/
-        ├── template.md   ← Material description (20-30 lines)
-        ├── widget-code.html  ← Complete working example
-        └── fixture.json  ← Sample data
+├── templates/            ← Material library (reusable primitive examples)
+│   ├── manifest.json
+│   └── <template-id>/
+│       ├── template.md   ← Material description (20-30 lines)
+│       ├── widget-code.html  ← Complete working example
+│       └── fixture.json  ← Sample data
+└── scripts/
+    └── check-materials.mjs
 ```
 
 ## Tool Contract
@@ -43,6 +51,8 @@ Do NOT use for standalone websites, apps, long reports, dashboards, slides, or w
 You MUST call `PureShowWidget` to render the visual. Do not pass `mode` unless the runtime requires it; never choose `panel`.
 
 ## Rendering Contract
+
+Full contract: read `{{SKILL_DIR}}/references/rendering-contract.md` before generating `widget_code`.
 
 Rules:
 - Output order: `<style>` → content HTML/SVG → `<script>` (only when interaction needed).
@@ -77,9 +87,9 @@ Token source: Read `{{SKILL_DIR}}/tokens/visual-tokens.md` for full CSS definiti
 
 **Chart series**: Same-kind sources use `--chart-series-1` through `--chart-series-4`. Overflow/Other uses `--chart-other`. Do not use random rainbow or semantic colors for ordinary sources. For 4+ sources, expand into brand-adjacent hues (blue/pink) only. Two-source charts need visibly separated steps.
 
-**Diagram classes**: `c-neutral` for structure, `c-brand` for focus/recommendation, `c-accent` for secondary category. Max 1-2 meaning colors per compact diagram. Do not apply diagram classes to connector paths.
+**Diagram colors**: Default diagrams are mostly neutral: `c-neutral` structure, one optional `c-brand` focal node/path, and at most one `c-accent` or semantic state color. If steps are peers, keep them neutral; do not color nodes by order, department, or category unless that distinction is the point.
 
-**Connectors**: Default neutral `--text-muted` or `--border`. Use `--brand`/`--accent`/semantic only when the connector carries meaning. Flowchart connectors use gentle curves/rounded L-bends, `stroke-linecap="round"`, `stroke-linejoin="round"`.
+**Connectors**: Default neutral `--text-muted` or `--border`. Use `--brand`/`--accent`/semantic only when the connector carries meaning, such as a critical path, selected flow, risk, failure, or explicit comparison path. Connector color should not merely mirror the source/target node. Flowchart connectors use gentle curves/rounded L-bends, `stroke-linecap="round"`, `stroke-linejoin="round"`.
 
 **Radius**: `--radius` (8px) default, `--radius-card` (12px) for cards, `--radius-full` (999px) for pills/circles. No ad hoc values.
 
@@ -109,6 +119,8 @@ Data honesty: Label estimates as estimates. Round consistently. Show units. Neve
 
 ## SVG Fundamentals
 
+Full SVG geometry contract: read `{{SKILL_DIR}}/references/svg-guide.md` when the output contains SVG, connectors, flowcharts, architecture diagrams, structural diagrams, or mechanism illustrations.
+
 ViewBox: Prefer `viewBox="0 0 720 H"`, `width="100%"`, `height="auto"`. Safe area ≥40 design units.
 
 Text sizing: 14px for labels (est. 8px/char Latin), 12px for metadata (7px/char). Node width ≥ max(title_chars×8, subtitle_chars×7) + 24px padding. Chinese labels: keep shorter than available width.
@@ -121,6 +133,21 @@ Common checks before output:
 - Every text label fits with padding.
 - No connector passes through unrelated nodes.
 - Flowchart nodes use rounded rectangles; diamonds/polygons use softened paths.
+
+## Reference Workflow
+
+Before generating `widget_code`:
+
+1. Decide whether an inline visual is clearer than Markdown. If not, skip the widget.
+2. Read `references/rendering-contract.md` and `references/content-guidelines.md`.
+3. Route to one scene file from the table below.
+4. Read `tokens/visual-tokens.md` for runtime token values and color limits.
+5. Check `references/material-catalog.md` and `templates/manifest.json` before writing custom HTML, SVG, or chart code.
+6. If borrowing a material, read that material's `template.md`; use `widget-code.html` and `fixture.json` as examples, not rigid output.
+7. If generating a custom fragment, keep the concrete reason clear: no ready material fits, a material avoid rule applies, the scene is mechanism-driven, or a mixed composition is clearer.
+8. If generating SVG, also apply `references/svg-guide.md`.
+
+Materials are examples. You may mix CSS, layout, fallback, tooltip, and interaction patterns from multiple materials when that fits the user's intent better than a single fixed template.
 
 ## Scene Router
 
@@ -138,5 +165,5 @@ Workflow:
 1. Determine if a compact visual is clearer than Markdown. If not, skip.
 2. Route to the matching scene file.
 3. Follow scene guidance: read generation principles, check available materials, compose output.
-4. Materials in `templates/<id>/widget-code.html` are reference — take CSS classes, layout patterns, interaction structures as needed. You can mix from multiple materials.
-
+4. Apply the shared hard gates from `references/` and the token contract from `tokens/visual-tokens.md`.
+5. Materials in `templates/<id>/widget-code.html` are reference — take CSS classes, layout patterns, fallback, tooltip, and interaction structures as needed. You can mix from multiple materials.
