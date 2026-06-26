@@ -1,0 +1,61 @@
+{
+  "title": "Architecture Elements",
+  "description": "Reusable blocks and lines for framework diagrams",
+  "blocks": [
+    {
+      "id": "neutral-module",
+      "label": "Neutral module",
+      "caption": "default block",
+      "role": "neutral"
+    },
+    {
+      "id": "brand-module",
+      "label": "Brand module",
+      "caption": "main focus",
+      "role": "brand"
+    },
+    {
+      "id": "boundary-block",
+      "label": "Boundary",
+      "caption": "runtime scope",
+      "role": "boundary"
+    },
+    {
+      "id": "external-block",
+      "label": "External",
+      "caption": "input/output",
+      "role": "external"
+    }
+  ],
+  "lines": [
+    {
+      "id": "neutral-solid",
+      "label": "Dependency",
+      "role": "neutral",
+      "style": "solid"
+    },
+    {
+      "id": "primary-dashed",
+      "label": "Primary path",
+      "role": "primary",
+      "style": "dashed"
+    },
+    {
+      "id": "optional-dashed",
+      "label": "Optional link",
+      "role": "optional",
+      "style": "dashed"
+    },
+    {
+      "id": "labeled-edge",
+      "label": "Labeled edge",
+      "role": "neutral",
+      "style": "labeled"
+    }
+  ],
+  "rules": [
+    "Start from the boundary",
+    "Pick one focus block",
+    "Connect only real dependencies"
+  ]
+}

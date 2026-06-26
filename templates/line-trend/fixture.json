@@ -1,0 +1,24 @@
+{
+  "title": "Line Chart",
+  "description": "January - June 2024",
+  "xDataKey": "month",
+  "seriesKey": "desktop",
+  "chartData": [
+    { "month": "January", "desktop": 186 },
+    { "month": "February", "desktop": 305 },
+    { "month": "March", "desktop": 237 },
+    { "month": "April", "desktop": 73 },
+    { "month": "May", "desktop": 209 },
+    { "month": "June", "desktop": 214 }
+  ],
+  "chartConfig": {
+    "desktop": {
+      "label": "Desktop",
+      "color": "var(--chart-series-1)"
+    }
+  },
+  "footer": {
+    "trend": "Trending up by 5.2% this month",
+    "detail": "Showing total visitors for the last 6 months"
+  }
+}
