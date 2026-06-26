@@ -9,7 +9,7 @@ A Gantt chart displaying project task scheduling, progress, dependencies, and cr
 
 Reusable primitives:
 - Left task rail + right timeline grid dual-column layout
-- `--chart-series-1` / `--brand` critical path color + non-critical fade
+- `--brand` critical path task bar color + non-critical fade
 - Dependency line routing (finish-to-start, endpoints extending below task bars)
 - Today marker line (single-color vertical line, hidden when out of range)
 - Hover/focus popup (color dot + task name + owner + dates + progress + status)
