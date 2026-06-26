@@ -1,5 +1,7 @@
 # Data Visualization
 
+Shared contracts: apply `references/rendering-contract.md`, `references/content-guidelines.md`, `references/material-catalog.md`, and `tokens/visual-tokens.md`. Apply `references/svg-guide.md` when the chart uses SVG.
+
 ## When to enter this scene
 
 The user's intent involves **expressing numerical relationships** of any of the following types:
@@ -70,13 +72,15 @@ document.querySelector('[data-dynamic-ui-widget][data-template="..."]:not([data-
 
 ## Reference materials
 
+Use `references/material-catalog.md` for final use/avoid boundaries. This scene list is the local shortlist.
+
 | Data relationship / Intent | Reference material | Usage notes |
 |---|---|---|
 | Trend (time series) | `line-trend` | Line + area gradient; multi-series overlay |
 | Comparison — grouped | `bar-chart-multiple` | Grouped bar chart; suitable for 2-4 groups x multiple categories |
 | Composition — stacked | `bar-stacked-legend` | Stacked bar chart + legend; shows contribution of each part |
 | Composition — donut | `pie-donut-text` | Donut chart + center text; <=5 categories |
-| Composition — label list | `pie-chart-label-list` | Pie chart + right-side label list; for many categories |
+| Composition — label list | `pie-chart-label-list` | Pie chart + sector labels; for short labels and <=5 categories |
 | Correlation / scatter | `scatter-chart` | Scatter plot; shows relationship between two variables |
 | Multi-dimensional profile — legend | `radar-chart-legend` | Radar chart + legend; suitable for person/product profiles |
 | Multi-dimensional profile — minimal | `radar-chart-lines-only` | Lines-only radar chart; <=3 dimension comparison |

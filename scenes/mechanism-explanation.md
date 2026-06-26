@@ -1,5 +1,7 @@
 # Mechanism Explanation
 
+Shared contracts: apply `references/rendering-contract.md`, `references/content-guidelines.md`, `references/svg-guide.md`, and `tokens/visual-tokens.md`. Check `references/material-catalog.md` only for reusable primitives; this scene usually needs custom composition.
+
 ## When to enter this scene
 
 The user's intent is to **understand how something works**, involving any of the following types:

@@ -1,5 +1,7 @@
 # Architecture & Flow
 
+Shared contracts: apply `references/rendering-contract.md`, `references/content-guidelines.md`, `references/svg-guide.md`, `references/material-catalog.md`, and `tokens/visual-tokens.md`.
+
 ## When to enter this scene
 
 The user's intent involves visualizing any of the following structural relationships:
@@ -46,6 +48,8 @@ Node width calculation: `max(title_chars * 8, subtitle_chars * 7) + 24`
 - Process nodes use rounded rectangles (rx=8)
 - Decision nodes use softened diamonds (rounded corners rather than sharp points)
 - Start/end nodes use pill shapes
+- Default visual hierarchy: neutral nodes/containers, one brand focal step or path, and optionally one accent or semantic state. If no step is selected, keep all nodes neutral.
+- Do not assign different colors by step order or category unless that distinction is explicitly meaningful and labeled.
 
 ### Connector specifications
 
@@ -53,8 +57,9 @@ Node width calculation: `max(title_chars * 8, subtitle_chars * 7) + 24`
 - Paths route around unrelated nodes, never crossing through them
 - Use gentle curves or rounded L-bends (`stroke-linejoin="round"`, `stroke-linecap="round"`)
 - Connector colors:
-  - Default: `--text-muted` or `--border-default` (neutral)
-  - Use `--brand` or `--accent` **only** for paths with semantic meaning
+  - Default: `--text-muted` or `--border` (neutral)
+  - Use `--brand`, `--accent`, or semantic tokens only for paths with explicit meaning: critical path, selected branch, failure/risk path, accepted path, or comparison path
+  - Do not color every connector to match its source/target node; that creates false semantics and visual noise
 
 ### Structural containers
 
@@ -70,10 +75,11 @@ Node width calculation: `max(title_chars * 8, subtitle_chars * 7) + 24`
 
 ## Reference materials
 
+Use `references/material-catalog.md` for final use/avoid boundaries. This scene list is the local shortlist.
+
 | Data relationship / Intent | Reference material | Usage notes |
 |---|---|---|
 | Module/dependency tree | `tree-flow` | Horizontal node-tree layout; suitable for dependency hierarchies <= 4 levels |
-| System/cloud/service architecture | `architecture-diagram` | Complete skeleton with boundaries, request path, async/auth paths, external systems, data layer, legend, and summary cards |
 | Module components and boundaries | `architecture-elements` | Provides neutral/brand/boundary/external block styles + connector styles (neutral solid, brand dashed, neutral dashed, labeled edge) |
 | Schedule/timeline | `gantt-chart` | Timeline + bar layout; suitable for task/milestone progress display |
 
@@ -82,25 +88,16 @@ Node width calculation: `max(title_chars * 8, subtitle_chars * 7) + 24`
 - **Block types**: neutral (regular module), brand (core module), boundary (logical boundary container), external (external system)
 - **Connector types**: neutral solid (standard call), brand dashed (highlighted data flow), neutral dashed (weak dependency), labeled edge (annotated connection)
 
-### architecture-diagram detailed layout reference
-
-- **Role taxonomy**: external actor/system, edge/gateway, runtime service, async queue/message bus, data store, observability/audit store, boundary/container.
-- **Layering order**: background grid and boundaries first, connectors second, nodes and labels last. This keeps arrows behind boxes.
-- **Connector routing**: start/end at node edges or visible ports, use rounded L-bends for multi-hop paths, and avoid unrelated nodes.
-- **Masking rule**: node boxes must use opaque token surfaces so connectors behind nodes do not show through.
-- **Spacing rule**: leave at least 40 design units between vertically stacked service boxes when inserting a queue/message bus in the gap.
-- **Legend rule**: place legends outside all region, cluster, data, or security boundaries; expand viewBox height if needed.
-
 ## Composition guidelines
 
 1. **Determine direction**: First decide whether information flows top-to-bottom (hierarchy/process) or left-to-right (time/dependency chain)
 2. **Select primary material**:
    - Hierarchical relationships → `tree-flow` as skeleton
-   - Complete system/cloud/service architecture → `architecture-diagram` as skeleton
+   - System/cloud/service architecture → compose from `architecture-elements` primitives; do not route to a missing fixed skeleton
    - Component palette or custom framework diagram → `architecture-elements` as primitives
    - Time dimension → `gantt-chart` as skeleton
 3. **Mix styles**: You may render `tree-flow` nodes using `architecture-elements` block styles; you may attach a simplified flow below a Gantt chart
-4. **Color restraint**: Use at most 3 semantic colors across the entire diagram (neutral + brand + 1 accent) to avoid a rainbow effect
+4. **Color restraint**: Strongly prefer neutral + brand + optional one accent/semantic color. More colors are allowed only when they encode labeled states or risks; otherwise use layout, grouping, line style, or labels.
 5. **Legend**: If more than 2 connector styles or more than 2 block styles are used, add a concise legend outside all boundary boxes
 
 ## Acceptance criteria
@@ -112,6 +109,8 @@ Node width calculation: `max(title_chars * 8, subtitle_chars * 7) + 24`
 - [ ] Flow steps <= 5 (main path); node spacing >= 60px
 - [ ] Connectors have fill="none", use round linejoin/linecap
 - [ ] Connectors do not cross through unrelated nodes
+- [ ] Diagram color posture is neutral-first: one brand focal point/path, optional one accent or semantic state
+- [ ] No rainbow-by-order nodes or source/target-matched connector colors unless each color has an explicit label/legend
 - [ ] Node fills are opaque enough to mask connectors drawn behind them
 - [ ] Legend, when present, sits outside all boundary boxes
 - [ ] Semantic colors are used correctly (neutral as default, brand only for highlighted paths)

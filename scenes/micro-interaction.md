@@ -1,5 +1,7 @@
 # Micro Interaction
 
+Shared contracts: apply `references/rendering-contract.md`, `references/content-guidelines.md`, `references/material-catalog.md`, and `tokens/visual-tokens.md`.
+
 ## When to enter this scene
 
 The user's intent involves a **locally interactive demonstration**:
